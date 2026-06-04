@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html, body {
+        margin: 0; height: 100%;
+        background: radial-gradient(900px 500px at 50% 20%, rgba(235, 235, 232,0.10), transparent 60%), #0a0a0b;
+        color: #eaeaea; font-family: ui-monospace, Menlo, monospace;
+        display: flex; align-items: center; justify-content: center; flex-direction: column;
+        gap: 18px;
+      }
+      .mark { width: 72px; height: 72px; border-radius: 14px; border: 1px solid rgba(235, 235, 232,0.45);
+        box-shadow: 0 0 22px rgba(235, 235, 232,0.22); margin-bottom: 4px; }
+      .logo { font-size: 30px; font-weight: 800; color: #e9e9e6; letter-spacing: 1px; }
+      .sub { font-size: 12px; letter-spacing: 4px; color: #6a6a6e; }
+      .bar { width: 220px; height: 4px; border-radius: 4px; background: #232327; overflow: hidden; margin-top: 8px; }
+      .fill { height: 100%; width: 40%; border-radius: 4px;
+        background: linear-gradient(90deg,#9a9a97,#ffffff);
+        animation: slide 1.1s ease-in-out infinite; }
+      @keyframes slide { 0%{transform:translateX(-100%)} 100%{transform:translateX(350%)} }
+      .hint { font-size: 11px; color: #6a6a6e; margin-top: 6px; }
+    </style>
+  </head>
+  <body>
+    <img class="mark" src="marketbubble.jpg" alt="" />
+    <div class="logo">MARKET BUBBLE</div>
+    <div class="sub">CHAT · UNIFIED OVERLAY</div>
+    <div class="bar"><div class="fill"></div></div>
+    <div class="hint">starting your local chat engine…</div>
+  </body>
+</html>

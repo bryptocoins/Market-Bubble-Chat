@@ -1,0 +1,25 @@
+{
+  "name": "market-bubble-chat-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Market Bubble Chat — desktop app wrapper",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "tree-kill": "^1.2.2"
+  },
+  "build": {
+    "appId": "com.marketbubble.chat",
+    "productName": "Market Bubble Chat",
+    "files": ["main.js", "loading.html", "marketbubble.jpg", "marketbubble.png", "marketbubble.ico"],
+    "win": { "target": "nsis", "icon": "marketbubble.ico", "artifactName": "MarketBubbleChat-Setup-${version}.${ext}" },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true }
+  }
+}

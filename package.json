@@ -1,0 +1,21 @@
+{
+  "name": "market-bubble-chat",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Market Bubble Chat — Twitch + Kick + X merged into one markets-native overlay, with a local control app and OBS overlay.",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix web install && npm --prefix desktop install",
+    "dev:server": "npm --prefix server run dev",
+    "dev:web": "npm --prefix web run dev",
+    "dev": "concurrently -n server,web -c gold,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "build": "npm --prefix web run build",
+    "app": "npm run build && npm --prefix desktop start",
+    "app:dev": "npm --prefix desktop start",
+    "x:login": "npm --prefix server run x:login",
+    "dist": "npm run build && npm --prefix desktop run dist",
+    "typecheck": "npm --prefix server run typecheck && npm --prefix web run typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
