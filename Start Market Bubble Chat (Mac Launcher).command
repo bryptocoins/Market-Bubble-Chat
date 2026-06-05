@@ -1,39 +1,49 @@
 #!/bin/bash
-# Market Bubble Chat launcher for macOS / Linux.
-# Clone the repo with GitHub Desktop (not a ZIP download) and just double-click
-# this. If macOS still blocks it, right-click -> Open, or run once:
-#   xattr -dr com.apple.quarantine .
+# Market Bubble Chat — macOS / Linux launcher.
+# Clone with GitHub Desktop (not a ZIP), then just double-click this. It sets up
+# everything it needs (Node check, dependencies, Electron, build) and launches.
+# If macOS blocks it the first time: right-click -> Open, or run: xattr -dr com.apple.quarantine .
+
 cd "$(dirname "$0")"
 
-# Put common Node install locations on PATH (Homebrew on Apple Silicon,
-# nodejs.org installer, nvm) so a double-clicked launcher can find npm.
+# Put common Node install locations on PATH (Homebrew/Apple Silicon, nodejs.org, nvm).
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 [ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
 
+fail() { echo ""; echo "  $1"; echo ""; read -p "  Press Return to close. "; exit 1; }
+
+# 1) Node.js — install via Homebrew if available, else point to the download.
 if ! command -v npm >/dev/null 2>&1; then
-  echo ""
-  echo "  Node.js isn't installed (npm not found)."
-  echo "  Install the LTS version from https://nodejs.org, then run this again."
-  echo ""
-  read -p "  Press Return to close. "
-  exit 1
+  if command -v brew >/dev/null 2>&1; then
+    echo "Node.js not found — installing it via Homebrew (one-time, a few minutes)..."
+    brew install node
+    hash -r
+  fi
+fi
+if ! command -v npm >/dev/null 2>&1; then
+  command -v open >/dev/null 2>&1 && open "https://nodejs.org"
+  fail "Node.js is required. I opened https://nodejs.org — install the LTS version, then run this again."
 fi
 
+# 2) Dependencies (first run).
 if [ ! -d web/node_modules ] || [ ! -d desktop/node_modules ] || [ ! -d server/node_modules ]; then
-  echo "First run — installing dependencies, this can take a few minutes..."
-  npm run install:all
+  echo "Installing dependencies (first run — this can take a few minutes)..."
+  npm run install:all || fail "Dependency install failed. Check your internet connection and run this again."
 fi
 
-# Electron's binary download can fail partway, leaving a broken install. Repair it.
+# 3) Repair a partial Electron install (its binary download can fail mid-way).
 if [ ! -f desktop/node_modules/electron/path.txt ]; then
   echo "Finishing Electron setup..."
-  rm -rf desktop/node_modules && npm --prefix desktop install
+  rm -rf desktop/node_modules
+  npm --prefix desktop install || fail "Electron setup failed. Check your internet connection and run this again."
 fi
 
+# 4) Build (first run).
 if [ ! -f web/.next/BUILD_ID ]; then
-  echo "Building the app..."
-  npm run build
+  echo "Building the app (first run)..."
+  npm run build || fail "Build failed. Run this again, or check the messages above."
 fi
 
+# 5) Launch.
 echo "Launching Market Bubble Chat..."
 npm --prefix desktop start
