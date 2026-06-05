@@ -30,12 +30,17 @@ if not exist "web\node_modules" (
   if errorlevel 1 ( echo. & echo   Install failed - check your internet and run this again. & echo. & pause & exit /b 1 )
 )
 
-REM 3) Repair a partial Electron install.
+REM 3) Make sure Electron's runtime is present (npm sometimes skips its postinstall).
 if not exist "desktop\node_modules\electron\path.txt" (
   echo Finishing Electron setup...
   rmdir /s /q "desktop\node_modules" 2>nul
   call npm --prefix desktop install
   if errorlevel 1 ( echo. & echo   Electron setup failed - check your internet and run this again. & echo. & pause & exit /b 1 )
+)
+if not exist "desktop\node_modules\electron\path.txt" (
+  echo Downloading the Electron runtime...
+  pushd desktop & node node_modules\electron\install.js & popd
+  if not exist "desktop\node_modules\electron\path.txt" ( echo. & echo   Electron download failed - check your internet and run this again. & echo. & pause & exit /b 1 )
 )
 
 REM 4) Build (first run).

@@ -31,11 +31,17 @@ if [ ! -d web/node_modules ] || [ ! -d desktop/node_modules ] || [ ! -d server/n
   npm run install:all || fail "Dependency install failed. Check your internet connection and run this again."
 fi
 
-# 3) Repair a partial Electron install (its binary download can fail mid-way).
+# 3) Make sure Electron's runtime is actually present. npm sometimes skips its
+#    postinstall (node_modules exists but the real app doesn't). Reinstall, then
+#    download it directly if it's still missing.
 if [ ! -f desktop/node_modules/electron/path.txt ]; then
   echo "Finishing Electron setup..."
   rm -rf desktop/node_modules
   npm --prefix desktop install || fail "Electron setup failed. Check your internet connection and run this again."
+fi
+if [ ! -f desktop/node_modules/electron/path.txt ]; then
+  echo "Downloading the Electron runtime..."
+  ( cd desktop && node node_modules/electron/install.js ) || fail "Electron download failed. Check your internet connection and run this again."
 fi
 
 # 4) Build (first run).
