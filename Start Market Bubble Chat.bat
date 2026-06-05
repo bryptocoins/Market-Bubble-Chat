@@ -2,8 +2,13 @@
 title Market Bubble Chat
 cd /d "%~dp0"
 
+if not exist "web\node_modules" (
+  echo First run - installing dependencies, this can take a few minutes...
+  call npm run install:all
+)
+
 if not exist "web\.next\BUILD_ID" (
-  echo First run - building the app, this takes a minute...
+  echo Building the app...
   call npm run build
 )
 
