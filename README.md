@@ -23,12 +23,16 @@ Market Bubble Chat is a desktop app that pulls chat from **Twitch, Kick, and X a
 
 ## Run it
 
+Works on **Windows and macOS** (and Linux). You'll need [Node.js](https://nodejs.org) 18+.
+
 ```bash
 npm run install:all   # first time only
 npm run app           # builds, then opens the app
 ```
 
-On Windows you can just double-click **`Market Bubble Chat`** (the shortcut).
+Or use the one-click launcher:
+- **Windows** → double-click **`Start Market Bubble Chat.bat`** (or the shortcut).
+- **macOS / Linux** → run `chmod +x start-market-bubble-chat.command` once, then double-click **`start-market-bubble-chat.command`**.
 
 Then:
 1. **Connect your channels** — type your Twitch / Kick / X names.

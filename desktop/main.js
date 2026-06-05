@@ -57,6 +57,15 @@ function waitForPort(port, timeoutMs = 90000) {
 async function startup() {
   Menu.setApplicationMenu(null);
 
+  // macOS: set the dock icon (the window `icon` option is Windows/Linux only).
+  if (process.platform === 'darwin' && app.dock) {
+    try {
+      app.dock.setIcon(path.join(__dirname, 'marketbubble.png'));
+    } catch {
+      /* best-effort */
+    }
+  }
+
   win = new BrowserWindow({
     width: 1200,
     height: 880,

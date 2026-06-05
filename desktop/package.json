@@ -20,6 +20,8 @@
     "productName": "Market Bubble Chat",
     "files": ["main.js", "loading.html", "marketbubble.jpg", "marketbubble.png", "marketbubble.ico"],
     "win": { "target": "nsis", "icon": "marketbubble.ico", "artifactName": "MarketBubbleChat-Setup-${version}.${ext}" },
-    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true }
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true },
+    "mac": { "target": "dmg", "icon": "marketbubble.png", "category": "public.app-category.utilities" },
+    "linux": { "target": "AppImage", "icon": "marketbubble.png", "category": "AudioVideo" }
   }
 }
