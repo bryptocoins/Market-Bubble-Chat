@@ -24,6 +24,12 @@ if [ ! -d web/node_modules ] || [ ! -d desktop/node_modules ] || [ ! -d server/n
   npm run install:all
 fi
 
+# Electron's binary download can fail partway, leaving a broken install. Repair it.
+if [ ! -f desktop/node_modules/electron/path.txt ]; then
+  echo "Finishing Electron setup..."
+  rm -rf desktop/node_modules && npm --prefix desktop install
+fi
+
 if [ ! -f web/.next/BUILD_ID ]; then
   echo "Building the app..."
   npm run build

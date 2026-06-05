@@ -15,6 +15,12 @@ if not exist "web\node_modules" (
   call npm run install:all
 )
 
+if not exist "desktop\node_modules\electron\path.txt" (
+  echo Finishing Electron setup...
+  rmdir /s /q "desktop\node_modules" 2>nul
+  call npm --prefix desktop install
+)
+
 if not exist "web\.next\BUILD_ID" (
   echo Building the app...
   call npm run build
