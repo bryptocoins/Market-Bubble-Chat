@@ -49,14 +49,23 @@ export default function Setup() {
   // Load current config once.
   useEffect(() => {
     setOwnerKey(localStorage.getItem('mb_owner_key') || '');
+    // Instant pre-fill from the last channels you used (survives anything server-side).
+    try {
+      const cached = localStorage.getItem('mb_channels');
+      if (cached) setChannels(JSON.parse(cached));
+    } catch {
+      /* ignore */
+    }
     fetch(CONFIG_HTTP_URL)
       .then((r) => r.json())
       .then((c: AppConfig) => {
-        setChannels({
+        const srv = {
           twitch: (c.channels?.twitch || []).join(', '),
           kick: (c.channels?.kick || []).join(', '),
           x: (c.channels?.x || []).join(', '),
-        });
+        };
+        // Server wins when it has channels; otherwise keep the cached ones.
+        if (srv.twitch || srv.kick || srv.x) setChannels(srv);
         setColor(c.display?.colorMode ?? false);
         setLoaded(true);
       })
@@ -87,6 +96,7 @@ export default function Setup() {
     setSaving(true);
     setSaveMsg('');
     localStorage.setItem('mb_owner_key', ownerKey);
+    localStorage.setItem('mb_channels', JSON.stringify(channels));
     const next: AppConfig = {
       filter: cfg?.filter ?? { hideEmojiOnly: false, maskChar: '*', defaultSlurListEnabled: true, rules: [] },
       channels: { twitch: parseList(channels.twitch), kick: parseList(channels.kick), x: parseList(channels.x) },

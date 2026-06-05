@@ -4,11 +4,15 @@
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { EventEmitter } from 'node:events';
 import { nanoid } from 'nanoid';
 import type { AppConfig } from './types.js';
 
-const CONFIG_PATH = resolve(process.cwd(), 'data', 'config.json');
+// Anchored to the server folder (this file is server/src/config.ts) so settings
+// always save/load from the same place, no matter the working directory the app
+// was launched from (Electron, browser launcher, npm script, etc.).
+const CONFIG_PATH = resolve(fileURLToPath(import.meta.url), '../../data/config.json');
 
 function parseChannels(env: string | undefined): string[] {
   if (!env) return [];
