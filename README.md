@@ -32,7 +32,7 @@ npm run app           # builds, then opens the app
 
 Or use the one-click launcher:
 - **Windows** → double-click **`Start Market Bubble Chat.bat`** (or the shortcut).
-- **macOS / Linux** → run `chmod +x start-market-bubble-chat.command` once, then double-click **`start-market-bubble-chat.command`**.
+- **macOS / Linux** → run `chmod +x "Start Market Bubble Chat (Mac Launcher).command"` once, then double-click **`Start Market Bubble Chat (Mac Launcher).command`**.
 
 Then:
 1. **Connect your channels** — type your Twitch / Kick / X names.
