@@ -26,3 +26,6 @@ server/.x-profile/
 # os
 .DS_Store
 Thumbs.db
+
+# build-freshness marker (auto-rebuild after pulls)
+.buildrev

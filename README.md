@@ -23,19 +23,20 @@ Market Bubble Chat is a desktop app that pulls chat from **Twitch, Kick, and X a
 
 ## Run it
 
-Works on **Windows and macOS** (and Linux). You'll need [Node.js](https://nodejs.org) 18+.
+Just **double-click a launcher** for your platform. It auto-installs everything it needs (Node, dependencies, etc.), rebuilds after updates, and starts. Two modes:
 
-```bash
-npm run install:all   # first time only
-npm run app           # builds, then opens the app
-```
+| | What it is | Use it when |
+|---|---|---|
+| **App Mode** | the full desktop app window | normal Mac / PC |
+| **Web Mode** | runs the app and opens it in your **browser** | virtual machines, or anywhere the desktop window won't open |
 
-Or use the one-click launcher:
-- **Windows** → double-click **`Start Market Bubble Chat.bat`** (or the shortcut).
-- **macOS** → double-click **`Start Market Bubble Chat (Mac Launcher).command`**.
+- **Windows** → `App Mode (Windows).bat` or `Web Mode (Windows).bat`
+- **macOS** → `App Mode (Mac).command` or `Web Mode (Mac).command`
 
-> **macOS first run:** macOS blocks unsigned scripts ("Apple could not verify…"). Click **Done** (not *Move to Trash*), then either **right-click the `.command` → Open → Open**, or in **System Settings → Privacy & Security** click **Open Anyway**. One time only.
-> Tidiest fix — in Terminal in this folder run `xattr -dr com.apple.quarantine .` once, then the launcher just works. (Or skip the launcher entirely and use `npm run app` in Terminal.)
+> **Clone with GitHub Desktop** (not a ZIP download) so the launchers run cleanly.
+> **macOS first run:** if it says "Apple could not verify…", click **Done** (not *Move to Trash*), then **right-click the launcher → Open**. One time only.
+
+Prefer the terminal? `npm run install:all` then `npm run app`.
 
 Then:
 1. **Connect your channels** — type your Twitch / Kick / X names.
