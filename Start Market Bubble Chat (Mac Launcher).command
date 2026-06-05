@@ -29,6 +29,8 @@ fi
 if [ ! -d web/node_modules ] || [ ! -d desktop/node_modules ] || [ ! -d server/node_modules ]; then
   echo "Installing dependencies (first run — this can take a few minutes)..."
   npm run install:all || fail "Dependency install failed. Check your internet connection and run this again."
+  echo "Setting up the X capture browser (optional — skip-safe)..."
+  ( cd server && npx --yes playwright install chromium ) || true
 fi
 
 # 3) Make sure Electron's runtime is actually present. npm sometimes skips its

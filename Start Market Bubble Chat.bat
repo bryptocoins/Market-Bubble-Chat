@@ -28,6 +28,8 @@ if not exist "web\node_modules" (
   echo Installing dependencies, this can take a few minutes...
   call npm run install:all
   if errorlevel 1 ( echo. & echo   Install failed - check your internet and run this again. & echo. & pause & exit /b 1 )
+  echo Setting up the X capture browser (optional)...
+  pushd server & call npx --yes playwright install chromium & popd
 )
 
 REM 3) Make sure Electron's runtime is present (npm sometimes skips its postinstall).
