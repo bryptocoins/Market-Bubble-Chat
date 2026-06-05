@@ -41,6 +41,7 @@ function defaultConfig(): AppConfig {
       colorMode: false,
       backdrop: '',
       backdropOpacity: 0.5,
+      logoBackdrop: true,
     },
   };
 }

@@ -114,7 +114,17 @@ function OverlayRow({ msg, opacity, colorMode }: { msg: ChatMessage; opacity: nu
           backdropFilter: 'blur(2px)',
         }}
       >
-        <PlatformLogo platform={msg.platform} size={16} />
+        <div className="flex items-center gap-1.5 shrink-0 pt-0.5">
+          <PlatformLogo platform={msg.platform} size={16} />
+          {msg.channel && (
+            <span
+              className="text-[12px] font-semibold whitespace-nowrap overlay-shadow"
+              style={{ color: `${PLATFORM_COLOR[msg.platform]}dd` }}
+            >
+              {msg.channel.replace(/^[@#]/, '')}
+            </span>
+          )}
+        </div>
         <div className="text-[17px] leading-snug overlay-shadow">
           <span className="font-bold" style={{ color: nameColor }}>
             {msg.username}

@@ -103,6 +103,7 @@ export default function Setup() {
       display: {
         backdrop: cfg?.display?.backdrop ?? '',
         backdropOpacity: cfg?.display?.backdropOpacity ?? 0.5,
+        logoBackdrop: cfg?.display?.logoBackdrop ?? true,
         colorMode: color,
       },
     };

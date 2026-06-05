@@ -58,6 +58,7 @@ export interface DisplayConfig {
   colorMode: boolean;
   backdrop: string;
   backdropOpacity: number;
+  logoBackdrop: boolean;
 }
 
 export interface AppConfig {

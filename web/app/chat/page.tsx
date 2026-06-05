@@ -29,8 +29,11 @@ export default function AllChat() {
   const counts = useFeedStore((s) => s.counts);
   const statuses = useFeedStore((s) => s.statuses);
   const colorMode = useFeedStore((s) => s.config?.display?.colorMode ?? false);
-  const backdrop = useFeedStore((s) => s.config?.display?.backdrop ?? '');
+  const customBackdrop = useFeedStore((s) => s.config?.display?.backdrop ?? '');
+  const logoBackdrop = useFeedStore((s) => s.config?.display?.logoBackdrop ?? true);
   const backdropOpacity = useFeedStore((s) => s.config?.display?.backdropOpacity ?? 0.5);
+  // Custom path always wins; otherwise fall back to the brand logo when enabled.
+  const backdrop = customBackdrop || (logoBackdrop ? '/marketbubble.png' : '');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,11 +61,13 @@ export default function AllChat() {
         </>
       )}
 
-      {/* Custom backdrop (owner-configured), shown behind the chats. */}
+      {/* Backdrop behind the chats: custom image (cover) or the brand logo (centered). */}
       {backdrop && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-center bg-cover"
+          className={`pointer-events-none absolute inset-0 bg-center ${
+            customBackdrop ? 'bg-cover' : 'bg-contain bg-no-repeat'
+          }`}
           style={{ backgroundImage: `url("${backdrop}")`, opacity: backdropOpacity }}
         />
       )}

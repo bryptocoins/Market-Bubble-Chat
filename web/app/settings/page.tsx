@@ -151,9 +151,15 @@ export default function Settings() {
         {/* All-chat backdrop + opacity (the pop-out window has no controls of its own) */}
         <Section title="All-Chat Appearance">
           <p className="text-xs text-obsidian-500 mb-3">
-            A custom backdrop image shown behind the <b className="text-gold-soft">All Chat</b> window (and its
-            pop-out). Configured here — the pop-out itself stays clean.
+            The background shown behind the <b className="text-gold-soft">All Chat</b> window (and its pop-out).
+            Defaults to your logo — toggle it off, or set a custom image below (a custom image always wins).
           </p>
+          <Toggle
+            label="Use logo as background"
+            checked={cfg.display?.logoBackdrop ?? true}
+            onChange={(v) => setDisplay({ logoBackdrop: v })}
+          />
+          <label className="block text-[11px] text-obsidian-500 mt-3 mb-1">Custom image (overrides the logo)</label>
           <div className="flex items-center gap-2 flex-wrap">
             <label className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gold/15 border border-gold/40 text-gold-soft hover:bg-gold/25 cursor-pointer">
               Upload image

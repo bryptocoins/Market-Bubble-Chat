@@ -103,7 +103,7 @@ export default function Dashboard() {
             {connected ? 'waiting for chat…' : 'connecting to feed…'}
           </div>
         ) : (
-          filtered.map((m) => <Message key={m.id} msg={m} colorMode={colorMode} />)
+          filtered.map((m) => <Message key={m.id} msg={m} colorMode={colorMode} showChannel />)
         )}
       </div>
 

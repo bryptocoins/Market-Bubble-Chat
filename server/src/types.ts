@@ -67,6 +67,9 @@ export interface DisplayConfig {
   // strongly it shows through (0 = hidden, 1 = full).
   backdrop: string;
   backdropOpacity: number;
+  // When no custom backdrop is set, show the app logo as the pop-out background.
+  // A custom backdrop (above) always takes precedence over the logo.
+  logoBackdrop: boolean;
 }
 
 export interface AppConfig {
