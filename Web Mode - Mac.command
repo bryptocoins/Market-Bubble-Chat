@@ -33,7 +33,10 @@ if [ ! -f web/.next/BUILD_ID ] || { [ -n "$REV" ] && [ "$REV" != "$(cat .buildre
   [ -n "$REV" ] && echo "$REV" > .buildrev
 fi
 
-# 4) Start backend + web, then open the browser.
+# 4) Free ports 3000/4000 if a previous run is still holding them.
+for p in 3000 4000; do pids="$(lsof -ti tcp:$p 2>/dev/null)"; [ -n "$pids" ] && kill -9 $pids 2>/dev/null; done
+
+# 5) Start backend + web, then open the browser.
 echo "Starting Market Bubble Chat..."
 npm --prefix server run start &
 npm --prefix web run start &

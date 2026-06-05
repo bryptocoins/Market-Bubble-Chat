@@ -50,6 +50,9 @@ if errorlevel 1 goto buildFail
 if defined REV (echo %REV%)>".buildrev"
 :buildDone
 
+echo Freeing ports 3000/4000 if a previous run is still open...
+powershell -NoProfile -Command "Get-NetTCPConnection -State Listen -LocalPort 3000,4000 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }" >nul 2>nul
+
 echo Starting Market Bubble Chat...
 start "MB Server" cmd /c "npm --prefix server run start"
 start "MB Web" cmd /c "npm --prefix web run start"

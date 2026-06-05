@@ -14,12 +14,13 @@ import type { AppConfig } from './types.js';
 // was launched from (Electron, browser launcher, npm script, etc.).
 const CONFIG_PATH = resolve(fileURLToPath(import.meta.url), '../../data/config.json');
 
-function parseChannels(env: string | undefined): string[] {
-  if (!env) return [];
-  return env
+function parseChannels(env: string | undefined, fallback: string[] = []): string[] {
+  if (!env) return fallback;
+  const list = env
     .split(',')
     .map((s) => s.trim().replace(/^#/, ''))
     .filter(Boolean);
+  return list.length ? list : fallback;
 }
 
 function defaultConfig(): AppConfig {
@@ -33,9 +34,9 @@ function defaultConfig(): AppConfig {
       ],
     },
     channels: {
-      twitch: parseChannels(process.env.TWITCH_CHANNELS),
-      kick: parseChannels(process.env.KICK_CHANNELS),
-      x: parseChannels(process.env.X_TARGETS),
+      twitch: parseChannels(process.env.TWITCH_CHANNELS, ['fazebanks']),
+      kick: parseChannels(process.env.KICK_CHANNELS, ['ansem']),
+      x: parseChannels(process.env.X_TARGETS, ['marketbubble']),
     },
     display: {
       colorMode: false,
@@ -66,9 +67,11 @@ export class ConfigStore extends EventEmitter {
         return {
           filter: { ...base.filter, ...raw.filter },
           channels: {
-            twitch: process.env.TWITCH_CHANNELS ? base.channels.twitch : persisted.twitch,
-            kick: process.env.KICK_CHANNELS ? base.channels.kick : persisted.kick,
-            x: process.env.X_TARGETS ? base.channels.x : persisted.x,
+            // Env wins if set; else persisted values; else fall back to the
+            // seeded defaults (so an empty saved config still shows the mains).
+            twitch: process.env.TWITCH_CHANNELS ? base.channels.twitch : (persisted.twitch?.length ? persisted.twitch : base.channels.twitch),
+            kick: process.env.KICK_CHANNELS ? base.channels.kick : (persisted.kick?.length ? persisted.kick : base.channels.kick),
+            x: process.env.X_TARGETS ? base.channels.x : (persisted.x?.length ? persisted.x : base.channels.x),
           },
           display: { ...base.display, ...raw.display },
         };

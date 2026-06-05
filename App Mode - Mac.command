@@ -50,6 +50,9 @@ if [ ! -f web/.next/BUILD_ID ] || { [ -n "$REV" ] && [ "$REV" != "$(cat .buildre
   [ -n "$REV" ] && echo "$REV" > .buildrev
 fi
 
-# 5) Launch the desktop app.
+# 5) Free ports 3000/4000 if a previous run is still holding them.
+for p in 3000 4000; do pids="$(lsof -ti tcp:$p 2>/dev/null)"; [ -n "$pids" ] && kill -9 $pids 2>/dev/null; done
+
+# 6) Launch the desktop app.
 echo "Launching Market Bubble Chat..."
 npm --prefix desktop start
