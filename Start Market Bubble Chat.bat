@@ -40,7 +40,11 @@ if not exist "desktop\node_modules\electron\path.txt" (
 if not exist "desktop\node_modules\electron\path.txt" (
   echo Downloading the Electron runtime...
   pushd desktop & node node_modules\electron\install.js & popd
-  if not exist "desktop\node_modules\electron\path.txt" ( echo. & echo   Electron download failed - check your internet and run this again. & echo. & pause & exit /b 1 )
+)
+if not exist "desktop\node_modules\electron\path.txt" (
+  echo Retrying the Electron download via mirror...
+  pushd desktop & set "ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/" & node node_modules\electron\install.js & popd
+  if not exist "desktop\node_modules\electron\path.txt" ( echo. & echo   Couldn't download Electron - check your internet/firewall and run this again. & echo. & pause & exit /b 1 )
 )
 
 REM 4) Build (first run).

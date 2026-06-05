@@ -41,7 +41,12 @@ if [ ! -f desktop/node_modules/electron/path.txt ]; then
 fi
 if [ ! -f desktop/node_modules/electron/path.txt ]; then
   echo "Downloading the Electron runtime..."
-  ( cd desktop && node node_modules/electron/install.js ) || fail "Electron download failed. Check your internet connection and run this again."
+  ( cd desktop && node node_modules/electron/install.js ) || true
+fi
+if [ ! -f desktop/node_modules/electron/path.txt ]; then
+  echo "Retrying the Electron download via mirror..."
+  ( cd desktop && ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/" node node_modules/electron/install.js ) \
+    || fail "Couldn't download Electron. Check your internet connection (or a firewall blocking the download) and run this again."
 fi
 
 # 4) Build (first run).
