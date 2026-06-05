@@ -5,6 +5,20 @@
 #   xattr -dr com.apple.quarantine .
 cd "$(dirname "$0")"
 
+# Put common Node install locations on PATH (Homebrew on Apple Silicon,
+# nodejs.org installer, nvm) so a double-clicked launcher can find npm.
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo ""
+  echo "  Node.js isn't installed (npm not found)."
+  echo "  Install the LTS version from https://nodejs.org, then run this again."
+  echo ""
+  read -p "  Press Return to close. "
+  exit 1
+fi
+
 if [ ! -d web/node_modules ] || [ ! -d desktop/node_modules ] || [ ! -d server/node_modules ]; then
   echo "First run — installing dependencies, this can take a few minutes..."
   npm run install:all
