@@ -30,8 +30,8 @@ Just **double-click a launcher** for your platform. It auto-installs everything 
 | **App Mode** | the full desktop app window | normal Mac / PC |
 | **Web Mode** | runs the app and opens it in your **browser** | virtual machines, or anywhere the desktop window won't open |
 
-- **Windows** → `App Mode (Windows).bat` or `Web Mode (Windows).bat`
-- **macOS** → `App Mode (Mac).command` or `Web Mode (Mac).command`
+- **Windows** → `App Mode - Windows.bat` or `Web Mode - Windows.bat`
+- **macOS** → `App Mode - Mac.command` or `Web Mode - Mac.command`
 
 > **Clone with GitHub Desktop** (not a ZIP download) so the launchers run cleanly.
 > **macOS first run:** if it says "Apple could not verify…", click **Done** (not *Move to Trash*), then **right-click the launcher → Open**. One time only.
